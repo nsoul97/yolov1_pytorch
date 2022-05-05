@@ -17,6 +17,15 @@ This repository implements the paper from scratch, including:
 + training with the VOC training set (train/val 2007 + train/val 2012), and
 + evaluation with VOC test set (test 2007)
 
+## Requirements
+The package requirements are listed in the `requirements.txt`:
+
+- torch
+- torchvision
+- matplotlib
+- pillow
+- tqdm 
+
 ## Datasets
 ### PASCAL VOC 2007 + PASCAL VOC 2012 dataset
 To download and prepare the VOC dataset, run the following scripts in the given order:
