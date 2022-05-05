@@ -6,14 +6,15 @@ differences compared to the paper:
 
 - The most important difference is pertinent to the model's architecture. Specifically, the first Fully Connected Layer
 is replaced by a Locally Connected Layer. In the paper, the architecture of the YOLO model is the following:
-![architecture](assets/model_architecture.png)
+<p align="center" width="100%"> <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/model_architecture.png?raw=true"/> </p>
+
 - A Batch Norm operation is used in each convolutional layer, after the convolution operation and before the activation
 function.
 - The learning rate schedule and the max_batches for which the network was trained.
 
 This repository implements the paper from scratch, including:
-+ pretraining with the ImageNet dataset, and
-+ training with the VOC training set (train/val 2007 + train/val 2012)
++ pretraining with the ImageNet dataset,
++ training with the VOC training set (train/val 2007 + train/val 2012), and
 + evaluation with VOC test set (test 2007)
 
 ## Datasets
@@ -65,35 +66,35 @@ also ignored during training to obtain a better Mean Average Precision.
 |      paper       |          63.4%           |
 
 </div>
-  
-![class_precisions](assets/class_aps.png)
 
+
+<p align="center" width="100%">
+  <img width="100%" src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/class_aps.png?raw=true"/>
+</p>
 
 ## Visualizing the Predictions
 The following annotated images belong the PASCAL VOC test set and the percentage value corresponds to the probability 
 that there is an object in the bounding box. 
 
-<p align="center>
-
-![6](assets/annnot_img_6.jpg)
-![21](assets/annnot_img_21.jpg)
-![33](assets/annnot_img_33.jpg)
-![59](assets/annnot_img_59.jpg)
-![70](assets/annnot_img_70.jpg)
-![74](assets/annnot_img_74.jpg)
-![107](assets/annnot_img_107.jpg)
-![108](assets/annnot_img_108.jpg)
-![125](assets/annnot_img_125.jpg)
-![140](assets/annnot_img_140.jpg)
-![198](assets/annnot_img_198.jpg)
-![268](assets/annnot_img_268.jpg)
-![272](assets/annnot_img_272.jpg)
-![303](assets/annnot_img_303.jpg)
-![308](assets/annnot_img_308.jpg)
-![314](assets/annnot_img_314.jpg)
-
+<p align="center" width="100%">
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_6.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_21.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_33.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_59.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_70.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_74.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_107.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_108.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_125.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_140.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_198.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_268.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_272.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_303.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_308.jpg?raw=true"/>
+  <img src="https://github.com/nsoul97/yolov1_pytorch/blob/main/assets/annnot_img_314.jpg?raw=true"/>
 </p>
 
-## Citations
+## References
 - Joseph Redmon, Santosh Kumar Divvala, Ross B. Girshick, & Ali Farhadi (2015). You Only Look Once: Unified, Real-Time Object Detection. CoRR, abs/1506.02640.
 - Mark Everingham, S. M. Ali Eslami, Luc Van Gool, Christopher K. I. Williams, John M. Winn, & Andrew Zisserman (2014). The Pascal Visual Object Classes Challenge: A Retrospective. International Journal of Computer Vision, 111, 98-136.
