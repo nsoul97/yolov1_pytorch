@@ -24,11 +24,15 @@ Furthermore, as instructed for evaluating the performance of a detection model i
 objects in the PASCAL VOC test set are not considered. Furthermore, the bounding boxes of the difficult objects were
 also ignored during training to obtain a better Mean Average Precision.
 
+<div align="center">
+
 |  Implementation  |  Mean Average Precision  |
 |:----------------:|:------------------------:|
 | this repository  |          63.6%           |
 |      paper       |          63.4%           |
 
+</div>
+  
 ![class_precisions](assets/class_aps.png)
 
 
@@ -36,7 +40,7 @@ also ignored during training to obtain a better Mean Average Precision.
 The following annotated images belong the PASCAL VOC test set and the percentage value corresponds to the probability 
 that there is an object in the bounding box. 
 
-<center>
+<p align="center>
 
 ![6](assets/annnot_img_6.jpg)
 ![21](assets/annnot_img_21.jpg)
@@ -55,7 +59,7 @@ that there is an object in the bounding box.
 ![308](assets/annnot_img_308.jpg)
 ![314](assets/annnot_img_314.jpg)
 
-</center>
+</p>
 
 ## Citations
 - Joseph Redmon, Santosh Kumar Divvala, Ross B. Girshick, & Ali Farhadi (2015). You Only Look Once: Unified, Real-Time Object Detection. CoRR, abs/1506.02640.
