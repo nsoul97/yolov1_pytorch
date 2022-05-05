@@ -61,11 +61,13 @@ PASCAL_VOC_DIR_PATH = "/media/soul/DATA/cv_datasets/PASCAL_VOC/VOC_Detection"
 DEVICE = 'cuda' if th.cuda.is_available() else 'cpu'
 
 # Checkpoint Hyperparameters
-LOAD_MODEL = 'train'  # 'pretrain', 'train', None
-PRETRAINED_CHECKPOINT_PATH = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
-                             "Detection/checkpoints/pretrain_checkpoint.pt"
+LOAD_MODEL = 'pretrain'  # 'pretrain', 'train', None
+PRETRAINED_MODEL_WEIGHTS = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
+                           "Detection/checkpoints/pretrained_model_weights.pt"
 TRAINING_CHECKPOINT_PATH = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
                            "Detection/checkpoints/training_checkpoint.pt"
+TRAINED_MODEL_WEIGHTS = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
+                        "Detection/checkpoints/trained_model_weights.pt"
 CHECKPOINT_T = 10
 
 
@@ -252,15 +254,7 @@ def train(train_loader: DataLoader,
         pbar.set_postfix_str(f'Train Loss={train_loss:.3f}, Test Loss={test_loss:.3f}')
         pbar.update(1)
 
-    th.save({'epoch': epoch,
-             'mini_batch': mini_batch,
-             'model_state_dict': model.state_dict(),
-             'optimizer_state_dict': optimizer.state_dict(),
-             'scheduler_state_dict': scheduler.state_dict(),
-             'train_loss_history': train_loss_history,
-             'test_loss_history': test_loss_history,
-             'grads': {p[0]: p[1].grad for p in model.named_parameters()}
-             }, TRAINING_CHECKPOINT_PATH)
+    th.save(model.state_dict(), TRAINED_MODEL_WEIGHTS)
     pbar.close()
 
 
@@ -356,8 +350,8 @@ def init_train(model: YOLOv1,
         test_loss_history = []
 
     elif LOAD_MODEL == 'pretrain':
-        checkpoint = th.load(PRETRAINED_CHECKPOINT_PATH)
-        model.load_state_dict(checkpoint['model_state_dict'], strict=False)
+        pretrained_model_weights = th.load(PRETRAINED_MODEL_WEIGHTS)
+        model.load_state_dict(pretrained_model_weights, strict=False)
         epoch = 0
         mini_batch = 0
         train_loss_history = []

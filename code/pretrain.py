@@ -41,9 +41,12 @@ IMAGENET_DIR_PATH = "/home/soul/Development/datasets/ImageNet"
 DEVICE = 'cuda' if th.cuda.is_available() else 'cpu'
 
 # Checkpoint Hyperparameters
-LOAD_MODEL = True
+TRAIN_MODEL = False # When the model is not trained, the final pretrained model weights are loaded for the model to be evaluated.
+LOAD_MODEL = True   # When the model is trained, it can either be trained from scratch or from a checkpoint.
 CHECKPOINT_PATH = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
                   "Detection/checkpoints/pretrain_checkpoint.pt"
+PRETRAINED_MODEL_WEIGHTS = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
+                           "Detection/checkpoints/pretrained_model_weights.pt"
 CHECKPOINT_T = 1
 
 
@@ -255,20 +258,26 @@ def init_train(model: YOLOv1,
     :param scheduler: The scheduler that will reduce the learning rate on validation loss plateaus
     :return: The current epoch and two lists containing the average train validation losses up to this epoch.
     """
-    if LOAD_MODEL and os.path.exists(CHECKPOINT_PATH):
-        checkpoint = th.load(CHECKPOINT_PATH)
+    if TRAIN_MODEL:
+        if LOAD_MODEL and os.path.exists(CHECKPOINT_PATH):
+            checkpoint = th.load(CHECKPOINT_PATH)
 
-        epoch = checkpoint['epoch']
-        train_loss_history = checkpoint['train_loss_history']
-        val_loss_history = checkpoint['val_loss_history']
+            epoch = checkpoint['epoch']
+            train_loss_history = checkpoint['train_loss_history']
+            val_loss_history = checkpoint['val_loss_history']
 
-        model.load_state_dict(checkpoint['model_state_dict'])
-        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+            model.load_state_dict(checkpoint['model_state_dict'])
+            optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+        else:
+            epoch = 0
+            train_loss_history = []
+            val_loss_history = []
     else:
-        epoch = 0
-        train_loss_history = []
-        val_loss_history = []
+        pretrained_model_weights = th.load(PRETRAINED_MODEL_WEIGHTS)
+        model.load_state_dict(pretrained_model_weights)
+
+        epoch, train_loss_history, val_loss_history = None, None, None
 
     return epoch, train_loss_history, val_loss_history
 
@@ -276,13 +285,17 @@ def init_train(model: YOLOv1,
 def main():
     train_loader, val_loader, model, optimizer, scheduler, criterion = setup_train()
     epoch, train_loss_history, val_loss_history = init_train(model, optimizer, scheduler)
-    train(train_loader, val_loader, model, optimizer, scheduler, criterion, epoch, train_loss_history, val_loss_history)
+    if TRAIN_MODEL:
+        train(train_loader, val_loader, model, optimizer, scheduler, criterion, epoch,
+              train_loss_history, val_loss_history)
     top1_accuracy, top5_accuracy = measure_accuracy(model, val_loader)
 
     print(f'Single-Crop Top1 Accuracy = {top1_accuracy * 100:.2f}%')
     print(f'Single-Crop Top5 Accuracy = {top5_accuracy * 100:.2f}%')
-    print(f'Train Loss History: {train_loss_history}')
-    print(f'Validation Loss History: {val_loss_history}')
+
+    if TRAIN_MODEL:
+        print(f'Train Loss History: {train_loss_history}')
+        print(f'Validation Loss History: {val_loss_history}')
 
 
 if __name__ == '__main__':

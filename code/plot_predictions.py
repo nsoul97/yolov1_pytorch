@@ -16,8 +16,8 @@ B = 2
 D = 448
 
 # Trained Model Path
-TRAINING_CHECKPOINT_PATH = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
-                           "Detection/checkpoints/training_checkpoint.pt"
+TRAINED_MODEL_WEIGHTS = "/home/soul/Development/You Only Look Once - Unified, Real-Time Object " \
+                        "Detection/checkpoints/trained_model_weights.pt"
 
 # VOC Dataset Directory
 PASCAL_VOC_DIR_PATH = "/media/soul/DATA/cv_datasets/PASCAL_VOC/VOC_Detection"
@@ -134,8 +134,8 @@ def setup_evaluation() -> Tuple[YOLOv1, VOC_Detection]:
     model = YOLOv1(S=S,
                    B=B,
                    C=VOC_Detection.C).to(DEVICE)
-    checkpoint = th.load(TRAINING_CHECKPOINT_PATH)
-    model.load_state_dict(checkpoint['model_state_dict'])
+    trained_model_weights = th.load(TRAINED_MODEL_WEIGHTS)
+    model.load_state_dict(trained_model_weights)
     model.eval()
 
     test_dataset = VOC_Detection(root_dir=PASCAL_VOC_DIR_PATH,
