@@ -16,8 +16,41 @@ This repository implements the paper from scratch, including:
 + training with the VOC training set (train/val 2007 + train/val 2012)
 + evaluation with VOC test set (test 2007)
 
-## Results
+## Datasets
+### PASCAL VOC 2007 + PASCAL VOC 2012 dataset
+To download and prepare the VOC dataset, run the following scripts in the given order:
+```
+./download_voc.sh
+./organize_voc.sh
+python3 simplify_voc_targets.py
+```
 
+### ImageNet 2012 Challenge Dataset
+To download the ImageNet dataset, one must first register in [ImageNet's official website](https://image-net.org/). Following that, download the files:
+- ILSVRC2012_img_train.tar
+- ILSVRC2012_img_val.tar
+- ILSVRC2012_devkit_t12.tar.gz
+
+Afterwards, to prepare the data for torchvision's ImageNet Dataset, run the scipt:
+```
+./organize_imagenet.sh
+```
+
+## Results
+The pretrained model achieves a Single-Crop Top5 Accuracy of 89% on the ImageNet's validation set compared to the paper's 88%. To evaluate the pretrained model:
+
+```
+python3 pretrain.py
+```
+
+To evaluate the performance of the trained YOLO model on the VOC test set and to visualize the model's predictions, run:
+```
+python3 evaluate.py
+python3 plot_predictions.py
+```
+respectively.
+
+The performance of the detection models in the VOC dataset is compared based on the mean average precision metric.
 The mean average precision was measured following the interpolation operation that is described in the paper 
 [The PASCAL Visual Object Classes Challenge: A Retrospective](http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf).
 Furthermore, as instructed for evaluating the performance of a detection model in the PASCAL VOC dataset, the difficult
